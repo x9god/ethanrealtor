@@ -46,7 +46,17 @@ class rentHouse extends house{
     set HasSecuritySystem(hasSecuritySystem) {this.hasSecuritySystem = hasSecuritySystem; }
     get HasPatio() { return this.hasPatio; }
     set HasPatio(hasPatio) {this.hasPatio = hasPatio; }
+    compare(house){
+        return (super.compare(house)&& this.numBedroom === house.numBedroom
+                && this.numBathroom === house.numBathroom && this.hasEVCharge === house.hasEVCharge
+                && this.hasGarden === house.hasGarden && this.hasLibrary === house.hasLibrary
+                && this.hasParking === house.hasParking && this.hasGym === house.hasGym
+                && this.hasDishwasher === house.hasDishwasher && this.hasHighSpeedInternet === house.hasHighSpeedInternet
+                && this.hasAirCondition === house.hasAirCondition && this.petFriendly === house.petFriendly
+                && this.hasFurniture === house.hasFurniture && this.hasSecuritySystem === house.hasSecuritySystem
+                && this.hasPatio === house.hasPatio);
 
+    }
 
 
 }
