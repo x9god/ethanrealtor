@@ -1,14 +1,20 @@
 class house{
    constructor(data) {
-       this.id = data.Id;
-       this.address = data.Address;
-       this.city = data.City;
-       this.province = data.Province;
-       this.postCode = data.PostCode;
-       this.type = data.Type;
-       this.price =  parseFloat(data.Price);
-       this.size = data.Size;
-       this.picture = data.Picture;
+       this.id = data.id;
+       this.address = data.address;
+       this.city = data.city;
+       this.province = data.province;
+       this.postCode = data.postCode;
+       this.type = data.type;
+       this.price = parseFloat(data.price);
+       this.size = data.size;
+       this.numBedroom = data.numBedroom;
+       this.numWashroom = data.numWashroom;
+       this.numParking = data.numParking;
+       this.description = data.description;
+       this.purpose = data.purpose;
+       this.rowIndex=data.rowIndex;
+       this.picture = [];
    }
    get Id(){
        return this.id;
@@ -58,46 +64,56 @@ class house{
    set  Size(size){
        this.size = size;
    }
-   get  Picture(){
-       return this.picture;
+   get  NumBed(){
+       return this.numBedroom;
    }
-   set  Picture(picture){
-       this.picture = picture;
+   set  NumBed(numBedroom){
+       return this.numBedroom = numBedroom;
    }
-   compareTwoHouse(house){
-       return this.id === house.id && this.address === house.address
-              && this.city === house.city && this.province === house.province
-              && this.postCode === house.postCode && this.type === house.type
-              && this.price === house.price && this.size === house.size
-              && this.picture === house.picture;
+   get NumWashroom(){
+       return this.numWashroom;
+   }
+   set  NumWashroom(numWashroom){
+       this.numWashroom = numWashroom;
+   }
+   get NumParking(){
+       return this.numParking;
+   }
+   set  NumParking(numParking){
+       this.numParking = numParking;
+   }
+   get Description(){
+       return this.description;
+   }
+   set  Description(description){
+       this.description = description;
+   }
+   get RowIndex(){
+       return this.rowIndex;
+   }
+   set  RowIndex(rowIndex){
+       this.rowIndex = rowIndex;
+   }
+   get Purpose(){
+       return this.purpose;
+   }
+   set  Purpose(purpose){
+       this.purpose = purpose;
+   }
+    checkHouseInfoRemoveCompletely() {
+        return this.id === '' &&
+            this.address === '' &&
+            this.city === '' &&
+            this.province === '' &&
+            this.postCode === '' &&
+            this.type === '' &&
+            isNaN(this.price) &&
+            this.size === '' &&
+            this.numBedroom === '' &&
+            this.numWashroom === '' &&
+            this.numParking === '' &&
+            this.description === '' &&
+            this.purpose === '';
     }
-    compareID(house){
-       return this.id === house.id;
-    }
-    compareAddress(house){
-       return this.address === house.address;
-    }
-    compareCity(house){
-       return this.city === house.city;
-    }
-    compareProvince(house){
-       return this.province === house.province;
-    }
-    comparePostCode(house){
-       return this.postCode === house.postCode;
-    }
-    compareType(house){
-       return this.type === house.type;
-    }
-    comparePrice(house){
-       return this.price === house.price;
-    }
-    compareSize(house){
-       return this.size === house.size;
-    }
-    comparePicture(house){
-       return this.picture === house.picture;
-    }
-
 }
 module.exports = { house };
