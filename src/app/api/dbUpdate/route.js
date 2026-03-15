@@ -7,6 +7,7 @@ export async function POST(req) {
     try {
         const body = await req.json();
         let readyForInjectDB = true;
+        let readyForInjectPic = true;
         if (body.sheet === 'property') {
             for (let attr in body.rows[0]) {
                 if (body.rows[0][attr] === '') {
@@ -61,8 +62,28 @@ export async function POST(req) {
             return Response.json({success: true});
         }
         else{
+            for (let attr in body.rows[0]) {
+                if (body.rows[0][attr] === '') {
+                    readyForInjectPic = false;
+                    break;
+                }
+                console.log("Waiting for filling or deleting house picture in Google Sheet");
+            }
+            if(readyForInjectPic){
+                console.log(body.rows[0].picture);
+                const client = await clientPromise;
+                try{
+                    const db = client.db('house');
+                    const collection = db.collection('properties');
+                    await collection.updateOne({id: body.rows[0].id},{$push: {picture: body.rows[0].picture}});
+                    console.log("Inject picture successfully, id: {}", body.rows[0].id);
+                }
+                catch(err){
+                   console.error("Inject picture to MongoDB failed: ", err);
+                }
+            }
 
-
+            return Response.json({success: true});
 
         }
     } catch (err) {
