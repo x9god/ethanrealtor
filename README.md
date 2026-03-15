@@ -71,9 +71,22 @@ function myonEdit(e) {
   }
 }
 ```
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Update the const url to your host.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+hint: if you have server, ignore this step, othervise follow the instruction.
+Second， if you don't have server to host the project, install ngrok to create a virtual public address.
+run the following commend in CMD:
+``` bash
+ngrok http 3000
+```
+
+Third, install the docker in your system and create a container with MongoDB image.
+
+
+Last step, in the project root folder, run:
+``` bash
+npm run dev
+```
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
