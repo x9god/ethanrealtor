@@ -3,19 +3,74 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 The prupose of this project is to synchronize the data from Google Sheet saved in Google Drive with the data stored in Mongodb host in the Docker container.
 
 ## Getting Started
-
-First, run the development server:
+First, create a Google Sheet in Google Drive. And create two tables, one is house and the other is picture.
+Add the following app script into google drive:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+function myonEdit(e) {
+  const url = "https://luz-unpanoplied-overdesirously.ngrok-free.dev/api/dbUpdate";
 
+  const sheet = e.source.getActiveSheet();
+  const range = e.range;
+
+  const startRow = range.getRow();
+  const numRows = range.getNumRows();
+  const lastColumn = sheet.getLastColumn();
+   const sheetName = sheet.getName();  
+  
+  const headers = sheet
+    .getRange(1, 1, 1, lastColumn)
+    .getValues()[0];
+  const rows = sheet
+    .getRange(startRow, 1, numRows, lastColumn)
+    .getValues();
+
+  const payloadRows = [];
+
+  for (let i = 0; i < rows.length; i++) {
+    const rowValues = rows[i];
+    const obj = {
+      rowIndex: startRow + i
+    };
+
+    headers.forEach((header, j) => {
+      obj[header] = rowValues[j];
+    });
+
+    payloadRows.push(obj);
+  }
+
+  const payload = {
+    sheet: sheetName, 
+    rows: payloadRows
+  };
+
+  const options = {
+    method: "post",
+    contentType: "application/json",
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true,
+    headers: {
+      "User-Agent": "Mozilla/5.0 (compatible; Google-Apps-Script)"
+    }
+  };
+
+  try {
+    const response = UrlFetchApp.fetch(url, options);
+    const status = response.getResponseCode();
+    const content = response.getContentText();
+
+    Logger.log(`Status: ${status}`);
+    Logger.log(`Response: ${content.substring(0, 500)}...`);
+
+    if (status < 200 || status >= 300) {
+      Logger.log("Failed – check server logs for why");
+    }
+  } catch (error) {
+    Logger.log("Fetch error: " + error);
+  }
+}
+```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
