@@ -87,6 +87,8 @@ Last step, in the project root folder, run:
 ``` bash
 npm run dev
 ```
+Two End point fetchSaleHouse and fetchRentHouse is receiving POST request from front end and return the list of the corresponding house information.
+
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
